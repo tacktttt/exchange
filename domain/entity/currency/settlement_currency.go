@@ -6,8 +6,8 @@ import (
 
 type SettlementCurrency struct {
 	ID           uuid.UUID
-	Symbol       string
-	IssuedAmount int
+	symbol       string
+	issuedAmount int
 }
 
 func NewSettlementCurrency(
@@ -17,15 +17,15 @@ func NewSettlementCurrency(
 ) *SettlementCurrency {
 	return &SettlementCurrency{
 		ID:           id,
-		Symbol:       symbol,
-		IssuedAmount: issuedAmount,
+		symbol:       symbol,
+		issuedAmount: issuedAmount,
 	}
 }
 
 func (k *SettlementCurrency) GetSymbol() string {
-	return k.Symbol
+	return k.symbol
 }
 
 func (k *SettlementCurrency) GetIssuedAmount() int {
-	return k.IssuedAmount
+	return k.issuedAmount
 }

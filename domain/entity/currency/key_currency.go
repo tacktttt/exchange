@@ -6,8 +6,8 @@ import (
 
 type KeyCurrency struct {
 	ID           uuid.UUID
-	Symbol       string
-	IssuedAmount int
+	symbol       string
+	issuedAmount int
 }
 
 func NewKeyCurrency(
@@ -17,17 +17,17 @@ func NewKeyCurrency(
 ) *KeyCurrency {
 	return &KeyCurrency{
 		ID:           id,
-		Symbol:       symbol,
-		IssuedAmount: issuedAmount,
+		symbol:       symbol,
+		issuedAmount: issuedAmount,
 	}
 }
 
 func (k *KeyCurrency) GetSymbol() string {
-	return k.Symbol
+	return k.symbol
 }
 
 func (k *KeyCurrency) GetIssuedAmount() int {
-	return k.IssuedAmount
+	return k.issuedAmount
 }
 
 func (k *KeyCurrency) Dummy() int {
