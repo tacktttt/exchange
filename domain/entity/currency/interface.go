@@ -1,6 +1,6 @@
 package currency
 
-type Currency interface {
+type ICurrency interface {
 	GetSymbol() string
 	GetIssuedAmount() int
 }

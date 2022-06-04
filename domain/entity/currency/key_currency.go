@@ -29,3 +29,7 @@ func (k *KeyCurrency) GetSymbol() string {
 func (k *KeyCurrency) GetIssuedAmount() int {
 	return k.IssuedAmount
 }
+
+func (k *KeyCurrency) Dummy() int {
+	return 0
+}
