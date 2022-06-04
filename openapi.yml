@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: exchange
+  version: "1.0"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  "/v1/users/{userId}":
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: Get User
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetUser"
+      operationId: get user
+      description: get user.
+      parameters: []
+  "/v1/users/{userId}/wallets":
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: Get User Wallets
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetWallets"
+      operationId: get user wallets
+      description: get user wallets.
+  "/v1/users/{userId}/wallets/{walletId}":
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: walletId
+        in: path
+        required: true
+    get:
+      summary: Get User Wallet
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetWallet"
+      operationId: get user wallet
+      description: get user wallet.
+  /v1/pairs:
+    get:
+      summary: Get Pairs
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetPairs"
+      operationId: get pairs
+      description: get pairs.
+    parameters: []
+  "/v1/pairs/{pairId}":
+    parameters:
+      - schema:
+          type: string
+        name: pairId
+        in: path
+        required: true
+    get:
+      summary: Get Pair
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetPair"
+      operationId: get pair
+      description: get pair.
+  "/v1/pairs/{pairId}/orders":
+    get:
+      summary: Get Pair Orders
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetOrders"
+      operationId: get pair orders
+      description: get pair orders.
+      requestBody:
+        $ref: "#/components/requestBodies/CreateOrder"
+    parameters:
+      - schema:
+          type: string
+        name: pairId
+        in: path
+        required: true
+    post:
+      summary: Create Pair Order
+      operationId: create pair order
+      responses:
+        "200":
+          $ref: "#/components/responses/GetOrder"
+      description: create pair order.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "/v1/pairs/{pairId}/orders/{orderId}":
+    parameters:
+      - schema:
+          type: string
+        name: pairId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: orderId
+        in: path
+        required: true
+    get:
+      summary: Get Pair Order
+      tags: []
+      responses:
+        "200":
+          $ref: "#/components/responses/GetOrder"
+      operationId: get pair order
+      description: get pair order.
+    delete:
+      summary: Delete Pair Order
+      operationId: delete pair order
+      responses:
+        "200":
+          description: OK
+      description: delete pair order.
+components:
+  schemas:
+    User:
+      title: User
+      x-stoplight:
+        id: 8dwru8g1v4x9y
+      type: object
+      examples:
+        - id: a3e48008-9947-4323-ab65-a7a97c17e416
+          name: hoge fuga
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Currency:
+      title: Currency
+      x-stoplight:
+        id: ny16a9yuxyo7r
+      type: object
+      properties:
+        id:
+          type: string
+        symbol:
+          type: string
+      examples:
+        - id: 9e42ab17-d2d2-49b8-ad93-d4896415c2c6
+          symbol: JPY
+    Pair:
+      title: Pair
+      x-stoplight:
+        id: nvlu2s0dzcajc
+      type: object
+      examples:
+        - id: c9a9e5de-d72e-4eae-934f-95dcc9e098e1
+          keyCurrency:
+            id: 175fd583-88d7-48c5-88a0-7d6f4192e503
+            symbol: USD
+          settlementCurrency:
+            id: 9e42ab17-d2d2-49b8-ad93-d4896415c2c6
+            symbol: JPY
+      properties:
+        id:
+          type: string
+        keyCurrency:
+          $ref: "#/components/schemas/Currency"
+        settlementCurrency:
+          $ref: "#/components/schemas/Currency"
+    Wallet:
+      title: Wallet
+      x-stoplight:
+        id: we8hbida957cp
+      type: object
+      examples:
+        - id: b2934ebb-7598-4d0a-9a40-2e70c0f57be6
+          currency:
+            id: 9e42ab17-d2d2-49b8-ad93-d4896415c2c6
+            symbol: JPY
+      properties:
+        id:
+          type: string
+        currency:
+          $ref: "#/components/schemas/Currency"
+        amount:
+          type: integer
+    Order:
+      title: Order
+      x-stoplight:
+        id: 487uqa23jwpzi
+      type: object
+      examples:
+        - id: string
+          pair:
+            id: c9a9e5de-d72e-4eae-934f-95dcc9e098e1
+            keyCurrency:
+              id: 175fd583-88d7-48c5-88a0-7d6f4192e503
+              symbol: USD
+            settlementCurrency:
+              id: 9e42ab17-d2d2-49b8-ad93-d4896415c2c6
+              symbol: JPY
+          amount: 10000
+          createdAtUTC: "2022-06-02T04:50:40Z"
+      properties:
+        id:
+          type: string
+        pair:
+          $ref: "#/components/schemas/Pair"
+        amount:
+          type: integer
+        createdAtUTC:
+          type: string
+          format: date-time
+  securitySchemes:
+    x-api-key:
+      name: x-api-key
+      type: apiKey
+      in: header
+  responses:
+    GetUser:
+      description: get user response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/User"
+    GetWallet:
+      description: get wallet response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Wallet"
+          examples:
+            example-1:
+              value:
+                id: b2934ebb-7598-4d0a-9a40-2e70c0f57be6
+                currency:
+                  id: 9e42ab17-d2d2-49b8-ad93-d4896415c2c6
+                  symbol: JPY
+    GetWallets:
+      description: get wallets response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Wallet"
+    GetPairs:
+      description: get pairs response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Pair"
+    GetPair:
+      description: get pair response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Pair"
+    GetOrder:
+      description: get order response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                $ref: "#/components/schemas/Order"
+    GetOrders:
+      description: get orders response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+  requestBodies:
+    CreateOrder:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              amount:
+                type: integer
+              pair:
+                $ref: "#/components/schemas/Pair"
+              position:
+                type: string
+                enum:
+                  - BUY
+                  - SELL
