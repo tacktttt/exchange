@@ -19,6 +19,6 @@ func NewUser(
 	}
 }
 
-func (k *User) GetName() string {
-	return k.name
+func (u *User) GetName() string {
+	return u.name
 }

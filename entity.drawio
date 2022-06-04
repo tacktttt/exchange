@@ -131,7 +131,7 @@
         <mxCell id="APr2OM0rVR9lsQ95xDab-1" value="IssuedAmount int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="OzYrmnNyAnNLEYynfJqm-48" vertex="1">
           <mxGeometry y="120" width="200" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="OzYrmnNyAnNLEYynfJqm-54" value="KeyCurrencyWallet" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+        <mxCell id="OzYrmnNyAnNLEYynfJqm-54" value="Wallet" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
           <mxGeometry x="520" y="40" width="200" height="150" as="geometry" />
         </mxCell>
         <mxCell id="OzYrmnNyAnNLEYynfJqm-55" value="ID uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="OzYrmnNyAnNLEYynfJqm-54" vertex="1">
