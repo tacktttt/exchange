@@ -19,7 +19,7 @@ type CreateOrderParam struct {
 }
 
 type ICreateOrderUsecase interface {
-	CreateOrder(params CreateOrderParam) error
+	Exec(params CreateOrderParam) error
 }
 
 type CreateOrderUsecase struct {
