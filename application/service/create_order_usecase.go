@@ -18,30 +18,30 @@ type CreateOrderParam struct {
 	SettlementAmount int
 }
 
-type ICreateOrderApplication interface {
+type ICreateOrderUsecase interface {
 	CreateOrder(params CreateOrderParam) error
 }
 
-type CreateOrderApplication struct {
+type CreateOrderUsecase struct {
 	ctx             context.Context
 	con             *sql.DB
 	pairRepository  repository.IPairRepository
 	contractService service.ContractService
 }
 
-func NewCreateOrderApplication(
+func NewCreateOrderUsecase(
 	ctx context.Context,
 	con *sql.DB,
 	contractService service.ContractService,
-) *CreateOrderApplication {
-	return &CreateOrderApplication{
+) *CreateOrderUsecase {
+	return &CreateOrderUsecase{
 		ctx:             ctx,
 		con:             con,
 		contractService: contractService,
 	}
 }
 
-func (o *CreateOrderApplication) Exec(params CreateOrderParam) error {
+func (o *CreateOrderUsecase) Exec(params CreateOrderParam) error {
 	pair, err := o.pairRepository.GetPairByID(o.con, params.PairID)
 	if err != nil {
 		return err
