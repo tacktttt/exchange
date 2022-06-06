@@ -1,6 +1,14 @@
 package currency
 
 type ICurrency interface {
-	GetSymbol() string
-	GetIssuedAmount() int
+	Symbol() string
+	IssuedAmount() int
+}
+
+type IKeyCurrency interface {
+	ICurrency
+}
+
+type ISettlementCurrency interface {
+	ICurrency
 }

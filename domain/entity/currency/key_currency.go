@@ -22,11 +22,11 @@ func NewKeyCurrency(
 	}
 }
 
-func (k *KeyCurrency) GetSymbol() string {
+func (k *KeyCurrency) Symbol() string {
 	return k.symbol
 }
 
-func (k *KeyCurrency) GetIssuedAmount() int {
+func (k *KeyCurrency) IssuedAmount() int {
 	return k.issuedAmount
 }
 

@@ -27,14 +27,14 @@ func NewWallet(
 	}
 }
 
-func (k *Wallet) GetAmount() int {
+func (k *Wallet) Amount() int {
 	return k.amount
 }
 
-func (k *Wallet) GetUser() user.IUser {
+func (k *Wallet) User() user.IUser {
 	return k.user
 }
 
-func (k *Wallet) GetCurrency() currency.ICurrency {
+func (k *Wallet) Currency() currency.ICurrency {
 	return k.currency
 }

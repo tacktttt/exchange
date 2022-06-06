@@ -5,6 +5,6 @@ import (
 )
 
 type IPair interface {
-	GetKeyCurrency() currency.ICurrency
-	GetSettlementCurrency() currency.ICurrency
+	KeyCurrency() currency.IKeyCurrency
+	SettlementCurrency() currency.ISettlementCurrency
 }

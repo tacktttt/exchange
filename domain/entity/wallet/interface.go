@@ -6,7 +6,7 @@ import (
 )
 
 type IWallet interface {
-	GetAmount() int
-	GetUser() user.IUser
-	GetCurrency() currency.ICurrency
+	Amount() int
+	User() user.IUser
+	Currency() currency.ICurrency
 }

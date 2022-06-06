@@ -23,10 +23,10 @@ func NewPair(
 	}
 }
 
-func (p *Pair) GetKeyCurrency() currency.ICurrency {
+func (p *Pair) KeyCurrency() currency.IKeyCurrency {
 	return p.keyCurrency
 }
 
-func (p *Pair) GetSettlementCurrency() currency.ICurrency {
+func (p *Pair) SettlementCurrency() currency.ISettlementCurrency {
 	return p.settlementCurrency
 }

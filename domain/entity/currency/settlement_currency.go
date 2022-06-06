@@ -22,10 +22,10 @@ func NewSettlementCurrency(
 	}
 }
 
-func (s *SettlementCurrency) GetSymbol() string {
+func (s *SettlementCurrency) Symbol() string {
 	return s.symbol
 }
 
-func (s *SettlementCurrency) GetIssuedAmount() int {
+func (s *SettlementCurrency) IssuedAmount() int {
 	return s.issuedAmount
 }
