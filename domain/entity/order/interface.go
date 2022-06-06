@@ -8,6 +8,7 @@ import (
 
 type IOrder interface {
 	Amount() int
+	Position() string
 	Pair() pair.IPair
 	KeyAmount() int
 	SettlementAmount() int

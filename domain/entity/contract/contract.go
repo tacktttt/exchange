@@ -8,31 +8,44 @@ import (
 
 type Contract struct {
 	ID             uuid.UUID
-	order          order.IOrder
-	oppositeOrders []order.IOrder
-	executions     []execution.IExecution
+	order          *order.Order
+	oppositeOrders []*order.Order
+	executions     []*execution.Execution
 }
 
 func NewContract(
-	id uuid.UUID,
-	order order.IOrder,
-	oppositeOrders []order.IOrder,
+	order *order.Order,
+	oppositeOrders []*order.Order,
 ) *Contract {
 	return &Contract{
-		ID:             id,
 		order:          order,
 		oppositeOrders: oppositeOrders,
 	}
 }
 
-func (k *Contract) Order() order.IOrder {
+func LoadContract(
+	id uuid.UUID,
+	order *order.Order,
+	oppositeOrders []*order.Order,
+	executions []*execution.Execution,
+) *Contract {
+	return &Contract{
+		ID:             id,
+		order:          order,
+		oppositeOrders: oppositeOrders,
+		executions:     executions,
+	}
+}
+
+func (k *Contract) Order() *order.Order {
 	return k.order
 }
 
-func (k *Contract) OppositeOrders() []order.IOrder {
+func (k *Contract) OppositeOrders() []*order.Order {
 	return k.oppositeOrders
 }
 
-func (k *Contract) Executions() []execution.IExecution {
+func (k *Contract) Executions() []*execution.Execution {
+	// TODO
 	return k.executions
 }

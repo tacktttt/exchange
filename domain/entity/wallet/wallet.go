@@ -9,15 +9,15 @@ import (
 type Wallet struct {
 	ID       uuid.UUID
 	amount   int
-	user     user.IUser
-	currency currency.ICurrency
+	user     *user.User
+	currency *currency.Currency
 }
 
 func NewWallet(
 	id uuid.UUID,
 	amount int,
-	user user.IUser,
-	currency currency.ICurrency,
+	user *user.User,
+	currency *currency.Currency,
 ) *Wallet {
 	return &Wallet{
 		ID:       id,
@@ -31,10 +31,10 @@ func (k *Wallet) Amount() int {
 	return k.amount
 }
 
-func (k *Wallet) User() user.IUser {
+func (k *Wallet) User() *user.User {
 	return k.user
 }
 
-func (k *Wallet) Currency() currency.ICurrency {
+func (k *Wallet) Currency() *currency.Currency {
 	return k.currency
 }

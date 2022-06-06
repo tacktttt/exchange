@@ -7,14 +7,14 @@ import (
 
 type Pair struct {
 	ID                 uuid.UUID
-	keyCurrency        currency.ICurrency
-	settlementCurrency currency.ICurrency
+	keyCurrency        *currency.KeyCurrency
+	settlementCurrency *currency.SettlementCurrency
 }
 
 func NewPair(
 	id uuid.UUID,
-	keyCurrency currency.ICurrency,
-	settlementCurrency currency.ICurrency,
+	keyCurrency *currency.KeyCurrency,
+	settlementCurrency *currency.SettlementCurrency,
 ) *Pair {
 	return &Pair{
 		ID:                 id,
@@ -23,10 +23,10 @@ func NewPair(
 	}
 }
 
-func (p *Pair) KeyCurrency() currency.IKeyCurrency {
+func (p *Pair) KeyCurrency() *currency.KeyCurrency {
 	return p.keyCurrency
 }
 
-func (p *Pair) SettlementCurrency() currency.ISettlementCurrency {
+func (p *Pair) SettlementCurrency() *currency.SettlementCurrency {
 	return p.settlementCurrency
 }

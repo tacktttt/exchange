@@ -10,19 +10,36 @@ import (
 type Order struct {
 	ID               uuid.UUID
 	amount           int
-	pair             pair.IPair
+	position         string
+	pair             *pair.Pair
 	keyAmount        int
 	settlementAmount int
 	utcCreatedAt     time.Time
 }
 
 func NewOrder(
-	id uuid.UUID,
 	amount int,
+	position string,
+	pair *pair.Pair,
 ) *Order {
 	return &Order{
-		ID:     id,
-		amount: amount,
+		amount:   amount,
+		position: position,
+		pair:     pair,
+	}
+}
+
+func LoadOrder(
+	id uuid.UUID,
+	amount int,
+	position string,
+	pair *pair.Pair,
+) *Order {
+	return &Order{
+		ID:       id,
+		amount:   amount,
+		position: position,
+		pair:     pair,
 	}
 }
 
@@ -30,7 +47,11 @@ func (k *Order) Amount() int {
 	return k.amount
 }
 
-func (k *Order) Pair() pair.IPair {
+func (k *Order) Position() string {
+	return k.position
+}
+
+func (k *Order) Pair() *pair.Pair {
 	return k.pair
 }
 
