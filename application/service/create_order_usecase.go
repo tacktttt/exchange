@@ -1,4 +1,4 @@
-package order
+package service
 
 import (
 	"context"
@@ -11,11 +11,11 @@ import (
 )
 
 type CreateOrderParam struct {
-	pairID           uuid.UUID
-	amount           int
-	position         string
-	keyAmount        int
-	settlementAmount int
+	PairID           uuid.UUID
+	Amount           int
+	Position         string
+	KeyAmount        int
+	SettlementAmount int
 }
 
 type ICreateOrderApplication interface {
@@ -41,12 +41,12 @@ func NewCreateOrderApplication(
 	}
 }
 
-func (o *CreateOrderApplication) CreateOrder(params CreateOrderParam) error {
-	pair, err := o.pairRepository.GetPairByID(o.con, params.pairID)
+func (o *CreateOrderApplication) Exec(params CreateOrderParam) error {
+	pair, err := o.pairRepository.GetPairByID(o.con, params.PairID)
 	if err != nil {
 		return err
 	}
 
-	order := order.NewOrder(params.amount, params.position, pair)
+	order := order.NewOrder(params.Amount, params.Position, pair)
 	return o.contractService.CreateOrder(order)
 }
