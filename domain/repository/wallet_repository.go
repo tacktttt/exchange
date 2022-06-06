@@ -1,11 +1,13 @@
 package repository
 
 import (
+	"database/sql"
+
 	"github.com/google/uuid"
 	"github.com/tacktttt/exchange/domain/entity/wallet"
 )
 
 type IWalletRepository interface {
-	GetWallets(userID uuid.UUID) ([]*wallet.IWallet, error)
-	GetWalletByID(userID uuid.UUID, walletID uuid.UUID) (*wallet.IWallet, error)
+	GetWallets(con *sql.DB, userID uuid.UUID) ([]*wallet.Wallet, error)
+	GetWalletByID(con *sql.DB, userID uuid.UUID, walletID uuid.UUID) (*wallet.Wallet, error)
 }
