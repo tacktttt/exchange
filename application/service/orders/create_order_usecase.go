@@ -18,7 +18,7 @@ type CreateOrderParam struct {
 	settlementAmount int
 }
 
-type IOrderApplication interface {
+type ICreateOrderApplication interface {
 	CreateOrder(params CreateOrderParam) error
 }
 
