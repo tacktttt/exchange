@@ -8,5 +8,5 @@ import (
 type IContract interface {
 	Order() order.IOrder
 	OppositeOrders() []order.IOrder
-	ExecContract() []execution.IExecution
+	Executions() []execution.IExecution
 }

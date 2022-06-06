@@ -33,7 +33,6 @@ func (k *Contract) OppositeOrders() []order.IOrder {
 	return k.oppositeOrders
 }
 
-func (k *Contract) ExecContract() []execution.IExecution {
-	// TODO: 約定
+func (k *Contract) Executions() []execution.IExecution {
 	return k.executions
 }
