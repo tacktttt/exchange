@@ -5,7 +5,6 @@ import (
 	"database/sql"
 
 	"github.com/tacktttt/exchange/domain/entity/contract"
-	"github.com/tacktttt/exchange/domain/entity/execution"
 	"github.com/tacktttt/exchange/domain/entity/order"
 	"github.com/tacktttt/exchange/domain/repository"
 )
@@ -18,6 +17,7 @@ type ContractService struct {
 	ctx                 context.Context
 	con                 *sql.DB
 	orderRepository     repository.IOrderRepository
+	contractRepository  repository.IContractRepository
 	executionRepository repository.IExecutionRepository
 }
 
@@ -25,12 +25,14 @@ func NewContractService(
 	ctx context.Context,
 	con *sql.DB,
 	orderRepository repository.IOrderRepository,
+	contractRepository repository.IContractRepository,
 	executionRepository repository.IExecutionRepository,
 ) *ContractService {
 	return &ContractService{
 		ctx:                 ctx,
 		con:                 con,
 		orderRepository:     orderRepository,
+		contractRepository:  contractRepository,
 		executionRepository: executionRepository,
 	}
 }
@@ -40,36 +42,36 @@ func (c *ContractService) CreateOrder(order *order.Order) error {
 	case "BUY":
 		return nil
 	case "SELL":
-		return c.sellOrder(order)
+		buyOrders, err := c.orderRepository.GetBuyOrdersBySellAmount(c.con, order.Amount())
+		if err != nil {
+			return err
+		}
+
+		return c.createContract(order, buyOrders)
 	}
 
 	return nil
 }
 
-func (c *ContractService) sellOrder(order *order.Order) error {
-	buyOrders, err := c.orderRepository.GetBuyOrdersBySellAmount(c.con, order.Amount())
+func (c *ContractService) createContract(order *order.Order, oppositeOrders []*order.Order) error {
+	contract := contract.NewContract(order, oppositeOrders)
+
+	err := contract.ExecContract()
 	if err != nil {
 		return err
 	}
 
-	contract := contract.NewContract(order, buyOrders)
-
-	// TODO: create contracts
-
-	err = c.createExecutions(contract.Executions())
+	_, err = c.contractRepository.Create(c.con, contract)
 	if err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func (c *ContractService) createExecutions(executions []*execution.Execution) error {
-	for _, execution := range executions {
+	for _, execution := range contract.Executions() {
 		_, err := c.executionRepository.Create(c.con, execution)
 		if err != nil {
 			return err
 		}
 	}
+
 	return nil
 }
