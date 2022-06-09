@@ -1,16 +1,19 @@
 package contract
 
 import (
+	"errors"
+
 	"github.com/google/uuid"
 	"github.com/tacktttt/exchange/domain/entity/execution"
 	"github.com/tacktttt/exchange/domain/entity/order"
 )
 
 type Contract struct {
-	ID             uuid.UUID
-	order          *order.Order
-	oppositeOrders []*order.Order
-	executions     []*execution.Execution
+	ID                 uuid.UUID
+	order              *order.Order
+	oppositeOrders     []*order.Order
+	executions         []*execution.Execution
+	isContractExecuted bool
 }
 
 func NewContract(
@@ -30,11 +33,23 @@ func LoadContract(
 	executions []*execution.Execution,
 ) *Contract {
 	return &Contract{
-		ID:             id,
-		order:          order,
-		oppositeOrders: oppositeOrders,
-		executions:     executions,
+		ID:                 id,
+		order:              order,
+		oppositeOrders:     oppositeOrders,
+		executions:         executions,
+		isContractExecuted: true,
 	}
+}
+
+func (k *Contract) ExecContract() error {
+	if k.isContractExecuted {
+		return errors.New("contract already executed.")
+	}
+
+	// TODO execute contract
+	k.isContractExecuted = true
+
+	return nil
 }
 
 func (k *Contract) Order() *order.Order {
@@ -46,6 +61,9 @@ func (k *Contract) OppositeOrders() []*order.Order {
 }
 
 func (k *Contract) Executions() []*execution.Execution {
-	// TODO
 	return k.executions
+}
+
+func (k *Contract) IsContractExecuted() bool {
+	return k.isContractExecuted
 }

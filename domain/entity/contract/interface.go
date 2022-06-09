@@ -9,4 +9,5 @@ type IContract interface {
 	Order() order.IOrder
 	OppositeOrders() []order.IOrder
 	Executions() []execution.IExecution
+	IsContractExecuted() bool
 }
