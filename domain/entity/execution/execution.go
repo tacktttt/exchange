@@ -5,17 +5,40 @@ import (
 )
 
 type Execution struct {
-	ID     uuid.UUID
-	amount int
+	ID          uuid.UUID
+	ContractID  uuid.UUID
+	BuyOrderID  uuid.UUID
+	SellOrderID uuid.UUID
+	amount      int
 }
 
 func NewExecution(
-	id uuid.UUID,
+	contractID uuid.UUID,
+	buyOrderID uuid.UUID,
+	sellOrderID uuid.UUID,
 	amount int,
 ) *Execution {
 	return &Execution{
-		ID:     id,
-		amount: amount,
+		ContractID:  contractID,
+		BuyOrderID:  buyOrderID,
+		SellOrderID: sellOrderID,
+		amount:      amount,
+	}
+}
+
+func LoadExecution(
+	id uuid.UUID,
+	contractID uuid.UUID,
+	buyOrderID uuid.UUID,
+	sellOrderID uuid.UUID,
+	amount int,
+) *Execution {
+	return &Execution{
+		ID:          id,
+		ContractID:  contractID,
+		BuyOrderID:  buyOrderID,
+		SellOrderID: sellOrderID,
+		amount:      amount,
 	}
 }
 

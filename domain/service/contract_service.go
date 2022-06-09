@@ -38,19 +38,12 @@ func NewContractService(
 }
 
 func (c *ContractService) CreateOrder(order *order.Order) error {
-	switch order.Position() {
-	case "BUY":
-		return nil
-	case "SELL":
-		buyOrders, err := c.orderRepository.GetBuyOrdersBySellAmount(c.con, order.Amount())
-		if err != nil {
-			return err
-		}
-
-		return c.createContract(order, buyOrders)
+	orders, err := c.orderRepository.GetOrdersByPositionAndAmount(c.con, order.Position(), order.Amount())
+	if err != nil {
+		return err
 	}
 
-	return nil
+	return c.createContract(order, orders)
 }
 
 func (c *ContractService) createContract(order *order.Order, oppositeOrders []*order.Order) error {

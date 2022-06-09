@@ -3,14 +3,15 @@ package order
 import (
 	"time"
 
+	"github.com/tacktttt/exchange/domain/entity/execution"
 	"github.com/tacktttt/exchange/domain/entity/pair"
 )
 
 type IOrder interface {
-	Amount() int
-	Position() string
 	Pair() pair.IPair
-	KeyAmount() int
+	Position() string
+	Amount() int
 	SettlementAmount() int
+	Executions() []*execution.Execution
 	UtcCreatedAt() time.Time
 }

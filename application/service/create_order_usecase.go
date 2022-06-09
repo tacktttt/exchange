@@ -12,9 +12,8 @@ import (
 
 type CreateOrderParam struct {
 	PairID           uuid.UUID
-	Amount           int
 	Position         string
-	KeyAmount        int
+	Amount           int
 	SettlementAmount int
 }
 
@@ -47,6 +46,6 @@ func (o *CreateOrderUsecase) Exec(params CreateOrderParam) error {
 		return err
 	}
 
-	order := order.NewOrder(params.Amount, params.Position, pair)
+	order := order.NewOrder(pair, params.Position, params.Amount, params.SettlementAmount)
 	return o.contractService.CreateOrder(order)
 }
