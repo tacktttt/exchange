@@ -38,12 +38,12 @@ func NewContractService(
 }
 
 func (c *ContractService) CreateOrder(order *order.Order) error {
-	orders, err := c.orderRepository.GetOrdersByPositionAndAmount(c.con, order.Position(), order.Amount())
+	oppositeOrders, err := c.orderRepository.GetOppositeOrders(c.con, order.Pair().ID, order.Position(), order.Amount())
 	if err != nil {
 		return err
 	}
 
-	return c.createContract(order, orders)
+	return c.createContract(order, oppositeOrders)
 }
 
 func (c *ContractService) createContract(order *order.Order, oppositeOrders []*order.Order) error {

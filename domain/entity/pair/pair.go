@@ -11,7 +11,7 @@ type Pair struct {
 	settlementCurrency *currency.SettlementCurrency
 }
 
-func NewPair(
+func LoadPair(
 	id uuid.UUID,
 	keyCurrency *currency.KeyCurrency,
 	settlementCurrency *currency.SettlementCurrency,

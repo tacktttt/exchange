@@ -10,7 +10,7 @@ type Currency struct {
 	issuedAmount int
 }
 
-func NewCurrency(
+func LoadCurrency(
 	id uuid.UUID,
 	symbol string,
 	issuedAmount int,

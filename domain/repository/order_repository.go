@@ -12,5 +12,5 @@ type IOrderRepository interface {
 	Delete(con *sql.DB, order *order.Order) error
 	GetOrdersByPairID(con *sql.DB, pairID uuid.UUID) ([]*order.Order, error)
 	GetOrderByID(con *sql.DB, orderID uuid.UUID) (*order.Order, error)
-	GetOrdersByPositionAndAmount(con *sql.DB, position string, amount int) ([]*order.Order, error)
+	GetOppositeOrders(con *sql.DB, pairID uuid.UUID, position string, amount int) ([]*order.Order, error)
 }

@@ -10,7 +10,7 @@ type SettlementCurrency struct {
 	issuedAmount int
 }
 
-func NewSettlementCurrency(
+func LoadSettlementCurrency(
 	id uuid.UUID,
 	symbol string,
 	issuedAmount int,

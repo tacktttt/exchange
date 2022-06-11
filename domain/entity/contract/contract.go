@@ -31,13 +31,14 @@ func LoadContract(
 	order *order.Order,
 	oppositeOrders []*order.Order,
 	executions []*execution.Execution,
+	isContractExecuted bool,
 ) *Contract {
 	return &Contract{
 		ID:                 id,
 		order:              order,
 		oppositeOrders:     oppositeOrders,
 		executions:         executions,
-		isContractExecuted: true,
+		isContractExecuted: isContractExecuted,
 	}
 }
 
@@ -46,7 +47,29 @@ func (k *Contract) ExecContract() error {
 		return errors.New("contract already executed.")
 	}
 
-	// TODO execute contract
+	switch k.order.Position() {
+	case "BUY":
+		remainingAmount := k.order.RemainingAmount()
+		oppositeOrders := k.OppositeOrders()
+
+		// sortをどこでするか、position毎に取得するか
+
+		for _, oppositeOrder := range oppositeOrders {
+			if remainingAmount == 0 {
+				break
+			}
+
+			if k.order.SettlementAmount() < oppositeOrder.SettlementAmount() {
+				break
+			}
+
+		}
+	case "SELL":
+		// SELL
+	default:
+		return errors.New("invalid position.")
+	}
+
 	k.isContractExecuted = true
 
 	return nil

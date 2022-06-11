@@ -9,7 +9,7 @@ type User struct {
 	name string
 }
 
-func NewUser(
+func LoadUser(
 	id uuid.UUID,
 	name string,
 ) *User {

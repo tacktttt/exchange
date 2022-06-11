@@ -10,7 +10,7 @@ type KeyCurrency struct {
 	issuedAmount int
 }
 
-func NewKeyCurrency(
+func LoadKeyCurrency(
 	id uuid.UUID,
 	symbol string,
 	issuedAmount int,
