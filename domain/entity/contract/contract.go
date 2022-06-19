@@ -11,32 +11,37 @@ import (
 type Contract struct {
 	ID                 uuid.UUID
 	order              *order.Order
-	oppositeOrders     []*order.Order
+	oppositeBuyOrders  []*order.Order
+	oppositeSellOrders []*order.Order
 	executions         []*execution.Execution
 	isContractExecuted bool
 }
 
 func NewContract(
 	order *order.Order,
-	oppositeOrders []*order.Order,
+	oppositeBuyOrders []*order.Order,
+	oppositeSellOrders []*order.Order,
 ) *Contract {
 	return &Contract{
-		order:          order,
-		oppositeOrders: oppositeOrders,
+		order:              order,
+		oppositeBuyOrders:  oppositeBuyOrders,
+		oppositeSellOrders: oppositeSellOrders,
 	}
 }
 
 func LoadContract(
 	id uuid.UUID,
 	order *order.Order,
-	oppositeOrders []*order.Order,
+	oppositeBuyOrders []*order.Order,
+	oppositeSellOrders []*order.Order,
 	executions []*execution.Execution,
 	isContractExecuted bool,
 ) *Contract {
 	return &Contract{
 		ID:                 id,
 		order:              order,
-		oppositeOrders:     oppositeOrders,
+		oppositeBuyOrders:  oppositeBuyOrders,
+		oppositeSellOrders: oppositeSellOrders,
 		executions:         executions,
 		isContractExecuted: isContractExecuted,
 	}
@@ -44,22 +49,20 @@ func LoadContract(
 
 func (k *Contract) ExecContract() error {
 	if k.isContractExecuted {
-		return errors.New("contract already executed.")
+		return errors.New("contract already executed")
 	}
 
 	switch k.order.Position() {
 	case "BUY":
 		remainingAmount := k.order.RemainingAmount()
-		oppositeOrders := k.OppositeOrders()
+		sellOrders := k.OppositeSellOrders()
 
-		// sortをどこでするか、position毎に取得するか
-
-		for _, oppositeOrder := range oppositeOrders {
+		for _, sellOrder := range sellOrders {
 			if remainingAmount == 0 {
 				break
 			}
 
-			if k.order.SettlementAmount() < oppositeOrder.SettlementAmount() {
+			if k.order.SettlementAmount() < sellOrder.SettlementAmount() {
 				break
 			}
 
@@ -67,7 +70,7 @@ func (k *Contract) ExecContract() error {
 	case "SELL":
 		// SELL
 	default:
-		return errors.New("invalid position.")
+		return errors.New("invalid position")
 	}
 
 	k.isContractExecuted = true
@@ -79,8 +82,12 @@ func (k *Contract) Order() *order.Order {
 	return k.order
 }
 
-func (k *Contract) OppositeOrders() []*order.Order {
-	return k.oppositeOrders
+func (k *Contract) OppositeSellOrders() []*order.Order {
+	return k.oppositeSellOrders
+}
+
+func (k *Contract) OppositeBuyOrders() []*order.Order {
+	return k.oppositeBuyOrders
 }
 
 func (k *Contract) Executions() []*execution.Execution {
